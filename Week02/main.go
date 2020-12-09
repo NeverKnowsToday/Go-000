@@ -19,7 +19,10 @@ func main()  {
 func GetInfo(p string) (*INFO, error){
 	Info, err := getInfo(p)
 	if err != nil {
-		return nil, err
+		if errors.Is(err,sql.ErrNoRows){
+			return nil,nil
+		}
+		return &INFO{}, err
 	}
 	return  Info, err
 }
